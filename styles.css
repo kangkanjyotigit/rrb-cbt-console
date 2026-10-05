@@ -159,7 +159,9 @@ table.data th{background:transparent;color:var(--faint);font-weight:600;font-siz
 .pill.a{color:var(--amb);border-color:#5c451a;background:var(--ambbg)}
 .pill.r{color:var(--red);border-color:#5c2630;background:var(--redbg)}
 .pill.b{color:var(--blu);border-color:#274b63;background:var(--blubg)}
-.reveal{margin-top:12px}
+.reveal{margin:10px 0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px}
+.reveal summary{cursor:pointer;color:var(--grn);font-size:13px;letter-spacing:.04em}
+.reveal p{margin:8px 0 2px}
 .kv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .kv:last-child{border-bottom:0}
 .kv b{font-family:var(--mono);font-weight:500}

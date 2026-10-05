@@ -45,6 +45,8 @@ function md(src) {
     }
     const bq = ln.match(/^\s*>\s?(.*)$/);
     if (bq) { closeList(); html += "<blockquote>" + inline(bq[1]) + "</blockquote>"; i++; continue; }
+    const dt = ln.match(/^\s*>>\s?(.*)$/);
+    if (dt) { closeList(); html += "<details class='reveal'><summary>Check answer</summary><p>" + inline(dt[1]) + "</p></details>"; i++; continue; }
     closeList(); html += "<p>" + inline(ln.trim()) + "</p>"; i++;
   }
   closeList();
@@ -156,6 +158,33 @@ function vDash() {
   $$("#view [data-ch]").forEach(c => c.addEventListener("change", () => { S.checks[c.dataset.ch] = c.checked; save(); vDash(); }));
   $$("#view [data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
   $$("#view [data-drill]").forEach(b => b.addEventListener("click", () => runDrill(b.dataset.drill)));
+}
+
+/* ================= LESSONS (guided track) ================= */
+const LESSON_ORDER = [
+  ["M3-lesson", "1 · Percentages, Profit, Discount — learn from zero"],
+  ["M5-lesson", "2 · Speed, Distance, Work — learn from zero"],
+  ["D1-lesson", "3 · Data Interpretation — learn from zero"],
+  ["L-lesson", "4 · Logic: syllogism, binary, puzzles — learn from zero"],
+];
+function vLessons() {
+  const items = window.RRB.lessons || [];
+  const byId = {}; items.forEach(s => byId[s.id] = s);
+  const read = S.lessonsRead || {};
+  const done = LESSON_ORDER.filter(([id]) => read[id]).length;
+  V.innerHTML = "<h1>Lessons</h1><p class='sub'>Guided chapters: intuition first, worked examples, hidden checkpoints. Read in order — " + done + "/" + LESSON_ORDER.length + " done.</p>" +
+    LESSON_ORDER.map(([id, label]) => {
+      const s = byId[id];
+      if (!s) return "<div class='libitem'><span>" + esc(label) + "</span><small>building…</small></div>";
+      return "<div class='libitem' data-id='" + id + "'><span>" + (read[id] ? "✓ " : "") + esc(label) + "</span><small>" + Math.round(s.md.split(/\s+/).length / 100) / 10 + "k words →</small></div>";
+    }).join("") + "<div id='doc'></div>";
+  $$("#view .libitem[data-id]").forEach(d => d.addEventListener("click", () => {
+    const s = byId[d.dataset.id];
+    if (!s) return;
+    $("#doc").innerHTML = "<div class='doc'>" + md(s.md) + "</div><div class='btnrow'><button class='btn sm' id='mk'>Mark lesson read ✓</button></div>";
+    window.scrollTo(0, $("#doc").offsetTop - 130);
+    $("#mk").addEventListener("click", () => { S.lessonsRead = S.lessonsRead || {}; S.lessonsRead[s.id] = true; save(); vLessons(); });
+  }));
 }
 
 /* ================= LEARN ================= */
@@ -420,7 +449,7 @@ function vLog() {
 }
 
 function go(v) { $$("#nav button").forEach(x => x.classList.toggle("on", x.dataset.v === v)); window.scrollTo(0, 0); RENDER[v](); }
-const RENDER = { dash: vDash, learn: vLearn, patterns: vPatterns, drill: vDrill, mock: vMock, rc: vRC, cbat: vCBAT, log: vLog };
+const RENDER = { dash: vDash, lessons: vLessons, learn: vLearn, patterns: vPatterns, drill: vDrill, mock: vMock, rc: vRC, cbat: vCBAT, log: vLog };
 
 /* ---------- boot ---------- */
 if (!window.RRB) {
