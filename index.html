@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section Control — CBT Console · RRB CEN 03/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,750&family=IBM+Plex+Mono:wght@400;500;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="grain"></div>
+<header id="topbar">
+  <div class="brand">
+    <span class="sig" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div>
+      <div class="brand-t">SECTION CONTROL <span>// CBT CONSOLE</span></div>
+      <div class="brand-s">RRB CEN 03/2026 · 100Q · 120 MIN · −⅓ · <span class="hindi">सेक्शन कंट्रोलर</span></div>
+    </div>
+  </div>
+  <div class="top-chips">
+    <div class="chip"><label>T–EXAM</label><b id="countdown" class="mono">--</b></div>
+    <div class="chip"><label>RAW TARGET</label><b class="mono">88–93</b></div>
+    <div class="chip"><label>ERRORS ≤</label><b class="mono">3</b></div>
+  </div>
+</header>
+<nav id="nav">
+  <button data-v="dash" class="on">Console</button>
+  <button data-v="learn">Learn</button>
+  <button data-v="patterns">Patterns</button>
+  <button data-v="drill">Drill</button>
+  <button data-v="mock">Mocks</button>
+  <button data-v="rc">RC Bank</button>
+  <button data-v="cbat">CBAT</button>
+  <button data-v="log">Logbook</button>
+</nav>
+<main id="view"></main>
+<footer id="foot">
+  <span>70% CBT + 30% CBAT · guess only with ≥2 options dead · mark &amp; move at 90s</span>
+  <span class="mono" id="clock"></span>
+</footer>
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
